@@ -33,13 +33,13 @@ get '/callback' do
   }.to_json, :content_type => :json, :accept => :json
 
   result = JSON.parse(response.to_str)
-  access_token = result.access_token
-  instance_url = result.instance_url
+  access_token = result[:access_token]
+  instance_url = result[:instance_url]
   chatter_profile_url = instance_url + "/services/data/29.0/chatter/users/me"
 
   response = RestClient.get chatter_profile_url, :accept => :json, :authorization => "Bearer #{access_token}"
   profile = JSON.parse(response.to_str)
-  "Hello, #{profile.name}"
+  "Hello, #{profile[:name]}"
 
 end
 
